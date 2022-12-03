@@ -4,6 +4,14 @@ import producer.Producer;
 
 import java.util.Scanner;
 
+/**
+ * Implementation of a concurrent solution to the
+ * <a href="https://en.wikipedia.org/wiki/Producer–consumer_problem">producer-consumer</a>
+ * problem using synchronized methods
+ *
+ * @author <a href="mailto:lemosantony@gmail.com">Antony Lemos</a>
+ * @author <a href="mailto:jonas.oliveira.111@ufrn.edu.br">Jonas de Oliveira</a>
+ */
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
