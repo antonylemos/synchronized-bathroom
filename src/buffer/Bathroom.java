@@ -17,8 +17,14 @@ public class Bathroom {
         bathroom = new ArrayList<Person>();
     }
 
+    final Person getPersonById(int personId) {
+        return bathroom.stream().filter(currentPerson ->
+                currentPerson.getId() == personId
+        ).findFirst().orElse(null);
+    }
+
     public synchronized void insert(Person person) {
-        while (bathroom.size() >= capacity) {
+        while (bathroom.size() >= capacity || !(currentGender == person.getGender() || bathroom.isEmpty())) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -27,6 +33,7 @@ public class Bathroom {
         }
 
         bathroom.add(person);
+        currentGender = person.getGender();
 
         System.out.println("Added gender: " + person.getGender());
         System.out.println("Current quantity: " + bathroom.size());
@@ -35,19 +42,15 @@ public class Bathroom {
     }
 
     public synchronized void remove(int personId) {
-        Person person = bathroom.stream().filter(currentPerson ->
-                currentPerson.getId() == personId
-        ).findFirst().orElse(null);
+        Person person = getPersonById(personId);
 
         while (person == null) {
             try {
                 wait();
-
-                person = bathroom.stream().filter(currentPerson ->
-                        currentPerson.getId() == personId
-                ).findFirst().orElse(null);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } finally {
+                person = getPersonById(personId);
             }
         }
 
@@ -59,7 +62,6 @@ public class Bathroom {
 
         bathroom.remove(person);
 
-        System.out.println("Removed gender: " + person.getGender());
         System.out.println("Current quantity: " + bathroom.size());
 
         notify();

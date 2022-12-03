@@ -1,7 +1,6 @@
 package consumer;
 
 import buffer.Bathroom;
-import person.Person;
 
 public class Consumer extends Thread {
     private Bathroom bathroom;

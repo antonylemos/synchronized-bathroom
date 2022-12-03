@@ -1,7 +1,6 @@
 import buffer.Bathroom;
 import consumer.Consumer;
 import producer.Producer;
-import utils.HandleInput;
 
 import java.util.Scanner;
 
@@ -9,14 +8,15 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter the number: ");
+        System.out.print("Enter the number of bathroom capacity: ");
         int bathroomCapacity = scanner.nextInt();
 
-//        final int bathroomCapacity = HandleInput.readNumber();
         Bathroom bathroom = new Bathroom(bathroomCapacity);
 
-        System.out.print("Enter the number: ");
+        System.out.print("Enter the number of persons: ");
         int numberOfPersons = scanner.nextInt();
+
+        scanner.close();
 
         Producer[] producers = new Producer[numberOfPersons];
         Consumer[] consumers = new Consumer[numberOfPersons];
